@@ -5,6 +5,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.apache.commons.lang3.StringUtils;
 
 
 @Route
@@ -17,10 +18,14 @@ public class MainView extends VerticalLayout {
         this.repo = repo;
         this.grid = new Grid<>(Customer.class);
         add(grid);
-        listCustomers();
+        //listCustomers();
     }
 
-    private void listCustomers() {
-        grid.setItems(repo.findAll());
+    private void listCustomers(String filterText) {
+        if (StringUtils.isEmpty(filterText)) {
+            grid.setItems(repo.findAll());
+        } else {
+            grid.setItems(repo.findByLastNameStartWithIgnoreCase(filterText));
+        }
     }
 }
