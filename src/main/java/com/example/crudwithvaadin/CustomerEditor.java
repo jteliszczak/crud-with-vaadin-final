@@ -2,12 +2,12 @@ package com.example.crudwithvaadin;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
-import com.vaadin.flow.component.Button;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.spring.annotation.Binder;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
     private ChangeHandler changeHandler;
 
     @Autowired
-    public CustomerEditor(Customer repository) {
+    public CustomerEditor(CustomerRepository repository) {
         this.repository = repository;
         add(firstName, lastName, actions);
         binder.bindInstanceFields(this);
@@ -42,7 +42,7 @@ public class CustomerEditor extends VerticalLayout implements KeyNotifier {
 
         addKeyPressListener(Key.ENTER, e -> save());
         save.addClickListener(e -> delete());
-        cancel.addCliclListener(e -> editCustomer(customer));
+        cancel.addClickListener(e -> editCustomer(customer));
         setVisible(false);
     }
 
